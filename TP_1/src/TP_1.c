@@ -48,12 +48,14 @@ int main(void) {
 
 
 		setbuf(stdout,NULL);
+		int flagMenuAerolineas=-1;
+		int flagMenuLatam=-1;
 		int opcionNumero;
 		int menuAerolinea;
 		float precioVueloAerolineas=0;
 		float precioVueloLatam=0;
 		int retornoKilometros=-1;
-		float retornoMenuAerolineas=-1;
+		float retornoMenu=-1;
 		int kilometrosIngresados;
 		float porcentajeDescuento;
 		float porcentajeRecargo;
@@ -63,6 +65,10 @@ int main(void) {
 		float precioTarjetaDebito;
 		float precioBitcoin;
 		float precioUnitario;
+		float precioTotalPorKilometros;
+		float precioSinDescuentoAerolineas;
+		float precioSinDescuentoLatam;
+		float diferenciaDePrecios;
 
 
 		printf("                [----BIENVENIDO SARLANGA VIAJES----] \n\n");
@@ -79,25 +85,25 @@ int main(void) {
 					break;
 				case 2:
 					do{
-						printf("Precios actuales Aerolíneas : $ %f  Latam : $ %f \n",precioVueloAerolineas, precioVueloLatam);
+						printf("Precios actuales Aerolíneas : $ %0.2f  Latam : $ %0.2f \n",precioVueloAerolineas, precioVueloLatam);
 						getInt(&menuAerolinea, "\n    ##### Ingrese empresa aérea  1) Aerolíneas  2) Latam  3) Salir de Menu precios  #####", "Error al selecione opcion correcta... \n\n", 3,1,2 );
 
 						if(menuAerolinea == 1 ){
 							do{
-								retornoMenuAerolineas = getFloat(&precioVueloAerolineas,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
-								if(retornoMenuAerolineas ==0){
-									//flagMenuAerolineas=1;
+								retornoMenu = getFloat(&precioVueloAerolineas,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
+								if(retornoMenu ==0){
+									flagMenuAerolineas=0;
 									}
-							}while(retornoMenuAerolineas==-1);
+							}while(retornoMenu==-1);
 						}
 
 						if(menuAerolinea == 2 ){
 							do{
-								retornoMenuAerolineas = getFloat(&precioVueloLatam,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
-								if(retornoMenuAerolineas ==0){
-									//flagMenuAerolineas=1;
+								retornoMenu = getFloat(&precioVueloLatam,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
+								if(retornoMenu ==0){
+									flagMenuLatam=0;
 									}
-							}while(retornoMenuAerolineas==-1);
+							}while(retornoMenu==-1);
 						}
 
 					}while(menuAerolinea!=3);
@@ -105,35 +111,78 @@ int main(void) {
 					break;
 
 				case 3:
-					precioTarjetaCredito = precioVueloAerolineas;
-					precioTarjetaDebito = precioVueloAerolineas;
-					precioBitcoin = precioVueloAerolineas;
-					precioUnitario = precioVueloAerolineas;
 
-					printf("Linea aérea Aerolineas \n");
-					// a) Tarjeta de débito (descuento 10%)
-					porcentajeRecargoDescuento=0.10;
-					calculoPorcentaje(precioTarjetaCredito, porcentajeRecargoDescuento,&porcentajeDescuento);
-					precioTarjetaCredito = precioTarjetaCredito - porcentajeDescuento;
-					printf("a)Precio con tarjeta debito: $ %0.2f \n",precioTarjetaCredito);
+					if(flagMenuAerolineas ==0){
 
-					//b) Tarjeta de crédito (interés 25%)
-					porcentajeRecargoDescuento=0.25;
-					calculoPorcentaje(precioTarjetaDebito, porcentajeRecargoDescuento,&porcentajeRecargo);
-					precioTarjetaDebito = precioTarjetaDebito + porcentajeRecargo;
-					printf("b)Precio con tarjeta credito: $ %0.2f \n",precioTarjetaDebito);
+						precioTotalPorKilometros= precioVueloAerolineas * (float)kilometrosIngresados;
+						printf("Precio Aerolineas $ %0.2f \n",precioTotalPorKilometros );
+						precioSinDescuentoAerolineas= precioTotalPorKilometros;
 
-					//c) Bitcoin (1BTC -> 4606954.55 Pesos Argentinos)
+						precioTarjetaCredito = precioTotalPorKilometros;
+						precioTarjetaDebito = precioTotalPorKilometros;
+						precioBitcoin = precioTotalPorKilometros;
+						precioUnitario = precioTotalPorKilometros;
 
-					precioBitcoin= precioBitcoin/bitCoin;
-					printf("c)Precio pagando con Bitcoin: %0.2f BTC \n",precioBitcoin);
+						// a) Tarjeta de débito (descuento 10%)
+						porcentajeRecargoDescuento=0.10;
+						calculoPorcentaje(precioTarjetaCredito, porcentajeRecargoDescuento,&porcentajeDescuento);
+						precioTarjetaCredito = precioTarjetaCredito - porcentajeDescuento;
+						printf("a)Precio con tarjeta debito: $ %0.2f \n",precioTarjetaCredito);
 
-					//d) Mostrar precio por km (precio unitario)
+						//b) Tarjeta de crédito (interés 25%)
+						porcentajeRecargoDescuento=0.25;
+						calculoPorcentaje(precioTarjetaDebito, porcentajeRecargoDescuento,&porcentajeRecargo);
+						precioTarjetaDebito = precioTarjetaDebito + porcentajeRecargo;
+						printf("b)Precio con tarjeta credito: $ %0.2f \n",precioTarjetaDebito);
 
-					printf("d)Mostrar precio unitario: $ %0.2f \n",precioUnitario);
+						//c) Bitcoin (1BTC -> 4606954.55 Pesos Argentinos)
 
-					printf("Linea aérea Latam \n");
-					//e) Mostrar diferencia de precio ingresada (Latam - Aerolíneas)
+						precioBitcoin= precioBitcoin/bitCoin;
+						printf("c)Precio pagando con Bitcoin: %0.2f BTC \n",precioBitcoin);
+
+						//d) Mostrar precio por km (precio unitario)
+
+						printf("d)Mostrar precio unitario: $ %0.2f \n\n",precioUnitario);
+					}
+
+					if(flagMenuLatam==0){
+
+						precioTotalPorKilometros= precioVueloLatam * (float)kilometrosIngresados;
+						printf("Precio Latam $ %0.2f \n",precioTotalPorKilometros );
+						precioSinDescuentoLatam = precioTotalPorKilometros;
+
+						precioTarjetaCredito = precioTotalPorKilometros;
+						precioTarjetaDebito = precioTotalPorKilometros;
+						precioBitcoin = precioTotalPorKilometros;
+						precioUnitario = precioTotalPorKilometros;
+
+						// a) Tarjeta de débito (descuento 10%)
+						porcentajeRecargoDescuento=0.10;
+						calculoPorcentaje(precioTarjetaCredito, porcentajeRecargoDescuento,&porcentajeDescuento);
+						precioTarjetaCredito = precioTarjetaCredito - porcentajeDescuento;
+						printf("a)Precio con tarjeta debito: $ %0.2f \n",precioTarjetaCredito);
+
+						//b) Tarjeta de crédito (interés 25%)
+						porcentajeRecargoDescuento=0.25;
+						calculoPorcentaje(precioTarjetaDebito, porcentajeRecargoDescuento,&porcentajeRecargo);
+						precioTarjetaDebito = precioTarjetaDebito + porcentajeRecargo;
+						printf("b)Precio con tarjeta credito: $ %0.2f \n",precioTarjetaDebito);
+
+						//c) Bitcoin (1BTC -> 4606954.55 Pesos Argentinos)
+
+						precioBitcoin= precioBitcoin/bitCoin;
+						printf("c)Precio pagando con Bitcoin: %0.2f BTC \n",precioBitcoin);
+
+						//d) Mostrar precio por km (precio unitario)
+
+						printf("d)Mostrar precio unitario: $ %0.2f \n\n",precioUnitario);
+
+						//e) Mostrar diferencia de precio ingresada (Latam - Aerolíneas)
+						calculoDiferenciaEntreDosNumeros(precioSinDescuentoAerolineas, precioSinDescuentoLatam,  &diferenciaDePrecios);
+						printf("La diferencia de precio es: $ %0.2f", diferenciaDePrecios);
+
+
+					}
 
 					break;
 				case 4:
