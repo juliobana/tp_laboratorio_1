@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "pedirDatos.h"
+#include "realizarCalculos.h"
 
 int main(void) {
 
@@ -46,34 +47,29 @@ int main(void) {
 */
 
 
-	setbuf(stdout,NULL);
+		setbuf(stdout,NULL);
 		int opcionNumero;
-		int kiliometrosIngresados;
-		int precioDelVuelo;
 		int menuAerolinea;
-		int saldoParcial=0;
-		int aux= -1;
-		int precioVueloAerolineas=0;
-		int precioVueloLatam=0;
-		//int precioVueloLatam;
-		int flag;
-
-		int dineroIngresado;
-		//int flagMenuAerolineas=0;
-		//int flagMenuLatam=0;
-		int dineroRetirado=0;
-		char deseaContinuar;
+		float precioVueloAerolineas=0;
+		float precioVueloLatam=0;
 		int retornoKilometros=-1;
-		int retornoMenuAerolineas=-1;
-		int retornoMenuPrecios;
+		float retornoMenuAerolineas=-1;
 		int kilometrosIngresados;
+		float porcentajeDescuento;
+		float porcentajeRecargo;
+		float porcentajeRecargoDescuento;
+		float bitCoin= 4606954.55;
+		float precioTarjetaCredito;
+		float precioTarjetaDebito;
+		float precioBitcoin;
+		float precioUnitario;
 
-		int catidadDeDineroparaRetirar;
+
 		printf("                [----BIENVENIDO SARLANGA VIAJES----] \n\n");
 
 
 		do{
-			getInt(&opcionNumero, "\n             ##### Ingrese un numero para operar ##### \n\n 1) Ingresar Kilómetros \n 2) Ingresar Precio de Vuelos \n 3) Calcular todos los costos \n 4) Informar Resultados \n 5) Carga forzada de datos \n 6) Salir \n", "El numero ingresado es Erroneo \n\n", 4,1,2 );
+			getInt(&opcionNumero, "\n             ##### Ingrese un numero para operar ##### \n\n 1) Ingresar Kilómetros \n 2) Ingresar Precio de Vuelos \n 3) Calcular todos los costos \n 4) Informar Resultados \n 5) Carga forzada de datos \n 6) Salir \n", "El numero ingresado es Erroneo \n\n", 6,1,2 );
 			switch (opcionNumero){
 				case 1:
 					while(retornoKilometros ==-1){
@@ -83,12 +79,12 @@ int main(void) {
 					break;
 				case 2:
 					do{
-						printf("Precios actuales Aerolíneas : $ %d  Latam : $ %d \n",precioVueloAerolineas, precioVueloLatam);
-						retornoMenuPrecios= getInt(&menuAerolinea, "\n    ##### Ingrese empresa aerea - 1) Aerolíneas  2) Latam  3) Salir de Menu precios  #####", "Error al selecione opcion correcta... \n\n", 3,1,2 );
+						printf("Precios actuales Aerolíneas : $ %f  Latam : $ %f \n",precioVueloAerolineas, precioVueloLatam);
+						getInt(&menuAerolinea, "\n    ##### Ingrese empresa aérea  1) Aerolíneas  2) Latam  3) Salir de Menu precios  #####", "Error al selecione opcion correcta... \n\n", 3,1,2 );
 
 						if(menuAerolinea == 1 ){
 							do{
-								retornoMenuAerolineas = getInt(&precioVueloAerolineas,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
+								retornoMenuAerolineas = getFloat(&precioVueloAerolineas,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
 								if(retornoMenuAerolineas ==0){
 									//flagMenuAerolineas=1;
 									}
@@ -97,7 +93,7 @@ int main(void) {
 
 						if(menuAerolinea == 2 ){
 							do{
-								retornoMenuAerolineas = getInt(&precioVueloLatam,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
+								retornoMenuAerolineas = getFloat(&precioVueloLatam,"Ingrese precio del vuelo \n","Error, el valor debe ser mayor a $0 \n",1000000, 0, 2);
 								if(retornoMenuAerolineas ==0){
 									//flagMenuAerolineas=1;
 									}
@@ -109,14 +105,37 @@ int main(void) {
 					break;
 
 				case 3:
+					precioTarjetaCredito = precioVueloAerolineas;
+					precioTarjetaDebito = precioVueloAerolineas;
+					precioBitcoin = precioVueloAerolineas;
+					precioUnitario = precioVueloAerolineas;
 
-					if(flag== 1 ){
-						getInt(&dineroIngresado, "\n    ##### Ingrese a la cuenta el monto dinero deseado ##### \n", "La cantidades permitidas es de $100 a $10000 \n\n", 10000,100,2 );
-						}
-					saldoParcial = kiliometrosIngresados + dineroIngresado;
-					printf("\n  dinero  a ingresado:  $ %d", dineroIngresado);
+					printf("Linea aérea Aerolineas \n");
+					// a) Tarjeta de débito (descuento 10%)
+					porcentajeRecargoDescuento=0.10;
+					calculoPorcentaje(precioTarjetaCredito, porcentajeRecargoDescuento,&porcentajeDescuento);
+					precioTarjetaCredito = precioTarjetaCredito - porcentajeDescuento;
+					printf("a)Precio con tarjeta debito: $ %0.2f \n",precioTarjetaCredito);
+
+					//b) Tarjeta de crédito (interés 25%)
+					porcentajeRecargoDescuento=0.25;
+					calculoPorcentaje(precioTarjetaDebito, porcentajeRecargoDescuento,&porcentajeRecargo);
+					precioTarjetaDebito = precioTarjetaDebito + porcentajeRecargo;
+					printf("b)Precio con tarjeta credito: $ %0.2f \n",precioTarjetaDebito);
+
+					//c) Bitcoin (1BTC -> 4606954.55 Pesos Argentinos)
+
+					precioBitcoin= precioBitcoin/bitCoin;
+					printf("c)Precio pagando con Bitcoin: %0.2f BTC \n",precioBitcoin);
+
+					//d) Mostrar precio por km (precio unitario)
+
+					printf("d)Mostrar precio unitario: $ %0.2f \n",precioUnitario);
+
+					printf("Linea aérea Latam \n");
+					//e) Mostrar diferencia de precio ingresada (Latam - Aerolíneas)
+
 					break;
-
 				case 4:
 
 						break;
@@ -125,11 +144,8 @@ int main(void) {
 
 						break;
 
-
-
-
 			}
-		}while(deseaContinuar != 's');
+		}while(opcionNumero != 6);
 
 		printf("Ah salido del Sistema");
 

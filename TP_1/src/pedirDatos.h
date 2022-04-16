@@ -12,6 +12,6 @@ int getInt(int * pNumeroIngresado,char * mensaje,char * mensajeError,int maximo,
 
 int getCaracter(char * pResultado,char * mensaje,char * mensajeError, char maximo, char minimo, int maximoDeReintentos);
 
-
+int getFloat(float * pNumeroIngresado,char * mensaje,char * mensajeError,int maximo, int minimo, int maximoDeReintentos);
 
 #endif /* PEDIRDATOS_H_ */

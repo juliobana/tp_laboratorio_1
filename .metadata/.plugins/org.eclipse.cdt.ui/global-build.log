@@ -1,18 +1,14 @@
-17:54:15 **** Incremental Build of configuration Debug for project TP_1 ****
+22:12:22 **** Incremental Build of configuration Debug for project TP_1 ****
 Info: Internal Builder is used for build
 gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\TP_1.o" "..\\src\\TP_1.c" 
-..\src\TP_1.c: In function 'main':
-..\src\TP_1.c:68:7: warning: variable 'retornoMenuPrecios' set but not used [-Wunused-but-set-variable]
-   68 |   int retornoMenuPrecios;
-      |       ^~~~~~~~~~~~~~~~~~
-..\src\TP_1.c:52:7: warning: unused variable 'precioDelVuelo' [-Wunused-variable]
-   52 |   int precioDelVuelo;
-      |       ^~~~~~~~~~~~~~
-..\src\TP_1.c:113:8: warning: 'flag' may be used uninitialized in this function [-Wmaybe-uninitialized]
-  113 |      if(flag== 1 ){
-      |        ^
-..\src\TP_1.c:116:19: warning: 'kiliometrosIngresados' may be used uninitialized in this function [-Wmaybe-uninitialized]
-  116 |      saldoParcial = kiliometrosIngresados + dineroIngresado;
-      |      ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-gcc -o TP_1.exe "src\\TP_1.o" "src\\pedirDatos.o" 
-Info: Nothing to build for TP_1
+gcc -o TP_1.exe "src\\TP_1.o" "src\\pedirDatos.o" "src\\realizarCalculos.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file TP_1.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+22:12:31 **** Incremental Build of configuration Debug for project TP_1 ****
+Info: Internal Builder is used for build
+gcc -o TP_1.exe "src\\TP_1.o" "src\\pedirDatos.o" "src\\realizarCalculos.o" 
+c:/mingw/bin/../lib/gcc/mingw32/9.2.0/../../../../mingw32/bin/ld.exe: cannot open output file TP_1.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+22:15:42 **** Incremental Build of configuration Debug for project TP_1 ****
+Info: Internal Builder is used for build
+gcc -o TP_1.exe "src\\TP_1.o" "src\\pedirDatos.o" "src\\realizarCalculos.o" 
