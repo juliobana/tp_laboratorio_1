@@ -2,7 +2,7 @@
  * pedirDatos.h
  *
  *  Created on: 10 abr. 2022
- *      Author: Julio
+ *      Author: Julio Baña
  */
 
 #ifndef PEDIRDATOS_H_

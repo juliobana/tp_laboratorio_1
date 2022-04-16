@@ -2,7 +2,7 @@
  * realizarCalculos.h
  *
  *  Created on: 14 abr. 2022
- *      Author: Julio
+ *      Author: Julio Baña
  */
 
 #ifndef REALIZARCALCULOS_H_

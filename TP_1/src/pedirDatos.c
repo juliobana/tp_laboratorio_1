@@ -18,6 +18,7 @@
 /// @param minimo
 /// @param maximoDeReintentos
 /// @return 0 si esta OK. -1 si algo no salio bien
+
 	int getInt(int * pNumeroIngresado,char * mensaje,char * mensajeError,
 			int maximo, int minimo, int maximoDeReintentos){
 
@@ -47,46 +48,6 @@
 
 
 
-	/// @brief Funcion pide caracter y valida el mismo
-	/// @param pResultado
-	/// @param mensaje
-	/// @param mensajeError
-	/// @param maximo
-	/// @param minimo
-	/// @param maximoDeReintentos
-	/// @return 0 si esta OK. -1 si algo no salio bien
-
-	int getCaracter(char * pResultado,char * mensaje,char * mensajeError, char maximo, char minimo, int maximoDeReintentos){
-
-			int auxCharacterIngresado;
-			int retorno;
-			retorno = -1;
-
-			if(pResultado != NULL && maximo >= minimo && maximoDeReintentos>= 0){
-				do{
-					printf("%s", mensaje);
-					scanf("%c", &auxCharacterIngresado);
-					maximoDeReintentos--;
-
-					if(auxCharacterIngresado >= minimo && auxCharacterIngresado <= maximo){
-								*pResultado = auxCharacterIngresado;
-								retorno = 0;
-								break;
-					}else{
-						printf("%s", mensajeError);
-					}
-
-				}while(maximoDeReintentos >= 0);
-			}
-
-			return retorno;
-	}
-
-
-
-
-
-
 
 	/// @brief Funcion pide float y valida el mismo
 	/// @param pResultado
@@ -96,7 +57,6 @@
 	/// @param minimo
 	/// @param maximoDeReintentos
 	/// @return 0 si esta OK. -1 si algo no salio bien
-
 
 	int getFloat(float * pNumeroIngresado,char * mensaje,char * mensajeError,
 				int maximo, int minimo, int maximoDeReintentos){

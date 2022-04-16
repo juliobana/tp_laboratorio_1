@@ -2,7 +2,7 @@
  * realizarCalculos.c
  *
  *  Created on: 14 abr. 2022
- *      Author: Julio
+ *      Author: Julio Baña
  */
 
 #include <stdio.h>
